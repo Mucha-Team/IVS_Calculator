@@ -1,17 +1,16 @@
 Prostredi
 ---------
 
-Ubuntu 64bit
+[//]: <> (Ubuntu 64bit)
 Windows 64bit
 
 Autori
 ------
 
 Nazev tymu
-- xlogin01 jmeno prijmeni 
-- xlogin02 jmeno prijmeni 
-- xlogin03 jmeno prijmeni 
-- xlogin04 jmeno prijmeni 
+- xmucha10 Martin Mucha
+- xrosec00 Richard Rosecký 
+- xvurmk00 Kryštof Vurm
 
 Licence
 -------
