@@ -7,7 +7,7 @@ Windows 64bit
 Autori
 ------
 
-Nazev tymu
+Mucha Team
 - xmucha10 Martin Mucha
 - xrosec00 Richard Rosecký 
 - xvurmk00 Kryštof Vurm
