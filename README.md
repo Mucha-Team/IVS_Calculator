@@ -15,4 +15,4 @@ Mucha Team
 Licence
 -------
 
-Tento program je poskytovan...
+GNU GPL v. 3
