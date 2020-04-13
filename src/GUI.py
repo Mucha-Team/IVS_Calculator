@@ -128,8 +128,8 @@ class CalcGUI(FloatLayout):
         self.buttonMinus = Button(text="^",size_hint=(.2,.2),on_press = self.over , pos_hint={'x':.8, 'y':.4}, font_size = 70)        
         self.add_widget(self.buttonMinus)
         
-        self.buttonTimes = Button(text="√",size_hint=(.2,.2),on_press = self.sqrt , pos_hint={'x':.8, 'y':.2}, font_size = 70)        
-        self.add_widget(self.buttonTimes)
+        self.buttonRoot = Button(text="√",size_hint=(.2,.2),on_press = self.root , pos_hint={'x':.8, 'y':.2}, font_size = 70)        
+        self.add_widget(self.buttonRoot)
         
         self.buttonEquals = Button(text="!",size_hint=(.2,.2),on_press = self.fact , pos_hint={'x':.8, 'y':.0}, font_size = 70)        
         self.add_widget(self.buttonEquals)
@@ -201,9 +201,9 @@ class CalcGUI(FloatLayout):
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
-    def sqrt(self,event):
+    def root(self,event):
         print("√")
-        self.firstNumber.text = addOperation("√ ") + setFirstNumber()
+        self.firstNumber.text = setFirstNumber() + addOperation("√ ")
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
 
