@@ -7,7 +7,6 @@
 #   Requirements:   Kivy 1.11.1                                             #
 #                   Python 3.7.2                                            #
 #                   Windows 7 or higher                                     #
-#                   IQ higher then 20                                       #
 #############################################################################
 
 import kivy
@@ -17,6 +16,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 from kivy.config import Config
+import mathlib
 Config.set('graphics','resizable',0)
 Config.set('graphics', 'width', '600')
 Config.set('graphics', 'height', '800')
@@ -55,9 +55,26 @@ def clearFirstNumber():
 
 def addOperation(op):
     global operation
-    if operation!="":
-        op=""
+    operation=op
+    op=" "+op
     return op
+
+def result():
+    global operation
+    global firstNumber
+    global numberString
+    res=""
+    if operation=="+":
+        res=str(mathlib.add(float(firstNumber),float(numberString)))
+    if operation=="-":
+        res=str(mathlib.sub(float(firstNumber),float(numberString)))
+    if operation=="×":
+        res=str(mathlib.mul(float(firstNumber),float(numberString)))
+    if operation=="÷":
+        res=str(mathlib.div(float(firstNumber),float(numberString)))
+    print(res)
+    firstNumber=res
+    return res
     
 class CalcGUI(FloatLayout):
     def __init__(self,**kwargs):
@@ -169,8 +186,12 @@ class CalcGUI(FloatLayout):
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
     def plus(self,event):
-        print("+")
-        self.firstNumber.text = setFirstNumber() + addOperation(" +")
+        global operation
+        if operation=="":
+            print("+")
+            self.firstNumber.text = setFirstNumber() + addOperation("+")
+        else:
+            self.firstNumber.text = result() + addOperation("+")
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
@@ -179,45 +200,64 @@ class CalcGUI(FloatLayout):
         if self.numberLabel.text == "0":
                 self.numberLabel.text=addNumber("-0")
         else:
-            self.firstNumber.text = setFirstNumber() + addOperation(" -")
+            global operation
+            if operation=="":
+                print("-")
+                self.firstNumber.text = setFirstNumber() + addOperation("-")
+            else:
+                self.firstNumber.text = result() + addOperation("-")
             self.numberLabel.text = clearNumber()
             self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
     def times(self,event):
-        print("×")
-        self.firstNumber.text = setFirstNumber() + addOperation(" ×")
+        global operation
+        if operation=="":
+            print("×")
+            self.firstNumber.text = setFirstNumber() + addOperation("×")
+        else:
+            self.firstNumber.text = result() + addOperation("×")
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
     def div(self,event):
-        print("÷")
-        self.firstNumber.text = setFirstNumber() + addOperation(" ÷")
+        global operation
+        if operation=="":
+            print("÷")
+            self.firstNumber.text = setFirstNumber() + addOperation("÷")
+        else:
+            self.firstNumber.text = result() + addOperation("÷")
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
     def over(self,event):
         print("^")
-        self.firstNumber.text = setFirstNumber() + addOperation(" ^")
+        self.firstNumber.text = setFirstNumber() + addOperation("^")
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
     def root(self,event):
         print("√")
-        self.firstNumber.text = setFirstNumber() + addOperation("√ ")
+        self.firstNumber.text = setFirstNumber() + addOperation("√")
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
 
     def fact(self,event):
         print("!")
-        self.firstNumber.text = setFirstNumber() + addOperation(" !")
+        self.firstNumber.text = setFirstNumber() + addOperation("!")
         self.numberLabel.text = clearNumber()
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
 
         
     def equals(self,event):
-        print("=")
-        self.firstNumber.text ="= "+ setFirstNumber()
+        global operation
+        if operation=="":
+            print("=")
+            self.firstNumber.text = setFirstNumber()
+        else:
+            self.firstNumber.text = result()
+        #self.firstNumber.text ="= "+ setFirstNumber()
         self.numberLabel.text = clearNumber()
+        operation=""
         self.buttonPoint.pos_hint={'x':.2, 'y':.0}
         
         
