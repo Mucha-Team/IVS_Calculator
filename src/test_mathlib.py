@@ -37,6 +37,11 @@ class TestCalc(unittest.TestCase):
 		with self.assertRaises(ZeroDivisionError):
 			mathlib.div(5,0)
 
+	def test_neg(self):
+		self.assertEqual(mathlib.neg(-2.5),2.5)
+		self.assertEqual(mathlib.neg(0),0)
+		self.assertEqual(mathlib.neg(11),-11)
+
 if __name__ == '__main__':
 	unittest.main()
 	
