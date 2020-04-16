@@ -1,3 +1,3 @@
-xmucha10 100 ()
+xmucha10 20 (GUI)
 xrosec00 100 ()
 xvurmk00 100 ()
