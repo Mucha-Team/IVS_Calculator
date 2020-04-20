@@ -1,5 +1,5 @@
-def power(x):
-    x = x ** 2
+def power(x, n):
+    x = x ** n
     return x
 
 def factorial(x):
@@ -12,28 +12,9 @@ def factorial(x):
 			y -= 1
 		return x
 
-def nroot_rec( minimum, maximum, prevMid, prec, expo, origNum):
-	middle=(maximum+minimum)/2
-	prec+=1
-
-	if (prevMid == middle):
-		return middle
-
-	if (prec < 200):
-		if middle**expo > origNum:
-			maximum=middle
-			return nroot_rec( minimum, maximum, middle, prec, expo, origNum)
-
-		elif middle**expo < origNum:
-			minimum=middle
-			return nroot_rec( minimum, maximum, middle, prec, expo, origNum)
-		elif middle**expo == origNum:
-			return middle
-	else:
-		return middle
-
-def nroot( num1, expo):
-	if num1 < 0:
+def root( x, n):
+	if nu < 0:
 		return - 1 #error, cant do root of neg number in real numbers
 	else:
-		return nroot_rec( 0, num1, -1, 1, expo, num1)
+		x = x ** (1 / n)
+		return x
