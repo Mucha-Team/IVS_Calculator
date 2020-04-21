@@ -17,6 +17,7 @@ from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 from kivy.config import Config
 import mathlib
+import AdvancedMathFunctions
 Config.set('graphics','resizable',0)
 Config.set('graphics', 'width', '600')
 Config.set('graphics', 'height', '800')
@@ -65,16 +66,22 @@ def result():
     global numberString
     res=""
     if operation=="+":
-        res=str(mathlib.add(float(firstNumber),float(numberString)))
+        res=str(mathlib.add(float(firstNumber.replace(',', '.')),float(numberString.replace(',', '.'))))
     if operation=="-":
-        res=str(mathlib.sub(float(firstNumber),float(numberString)))
+        res=str(mathlib.sub(float(firstNumber.replace(',', '.')),float(numberString.replace(',', '.'))))
     if operation=="×":
-        res=str(mathlib.mul(float(firstNumber),float(numberString)))
+        res=str(mathlib.mul(float(firstNumber.replace(',', '.')),float(numberString.replace(',', '.'))))
     if operation=="÷":
-        res=str(mathlib.div(float(firstNumber),float(numberString)))
+        res=str(mathlib.div(float(firstNumber.replace(',', '.')),float(numberString.replace(',', '.'))))
+    if operation=="√":
+    	res=str(AdvancedMathFunctions.root(float(numberString.replace(',', '.')),float(firstNumber.replace(',', '.'))))
+    if operation=="^":
+    	res=str(AdvancedMathFunctions.power(float(firstNumber.replace(',', '.')),float(numberString.replace(',', '.'))))
+    if operation=="!":
+    	res=str(AdvancedMathFunctions.factorial(float(firstNumber.replace(',', '.'))))
     print(res)
     firstNumber=res
-    return res
+    return res.replace('.',',')
     
 class CalcGUI(FloatLayout):
     def __init__(self,**kwargs):
@@ -120,7 +127,9 @@ class CalcGUI(FloatLayout):
         self.buttonZero = Button(text="0",size_hint=(.2,.2),on_press = self.addZero , pos_hint={'x':.0, 'y':.0}, font_size = 70)        
         self.add_widget(self.buttonZero)
 
-        
+        #self.buttonPointDisabled = Button(text=".",size_hint=(.2,.2), background_color=(0.75,0.75,0.75,1) , pos_hint={'x':.2, 'y':.0}, font_size = 70)        
+        #self.add_widget(self.buttonPointDisabled)
+
         self.buttonPoint = Button(text=",",size_hint=(.2,.2),on_press = self.addPoint , pos_hint={'x':.2, 'y':.0}, font_size = 70)        
         self.add_widget(self.buttonPoint)
 
@@ -176,14 +185,17 @@ class CalcGUI(FloatLayout):
         
     def addPoint(self,event):
         self.numberLabel.text = addNumber(",")
-        self.buttonPoint.pos_hint={'x':1, 'y':1}
+        #self.buttonPoint.pos_hint={'x':1, 'y':1}
+        self.buttonPoint.disabled = True
+        #self.buttonPointDissabled.pos_hint={'x':1, 'y':1}
         
     def clear(self,event):
         if self.numberLabel.text == "0":
             self.firstNumber.text = clearFirstNumber()
         else:
             self.numberLabel.text = clearNumber()
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled = False
         
     def plus(self,event):
         global operation
@@ -193,7 +205,8 @@ class CalcGUI(FloatLayout):
         else:
             self.firstNumber.text = result() + addOperation("+")
         self.numberLabel.text = clearNumber()
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled = False
         
     def minus(self,event):
         print("-")
@@ -207,7 +220,8 @@ class CalcGUI(FloatLayout):
             else:
                 self.firstNumber.text = result() + addOperation("-")
             self.numberLabel.text = clearNumber()
-            self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+            #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+            self.buttonPoint.disabled = False
         
     def times(self,event):
         global operation
@@ -217,7 +231,8 @@ class CalcGUI(FloatLayout):
         else:
             self.firstNumber.text = result() + addOperation("×")
         self.numberLabel.text = clearNumber()
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled = False
         
     def div(self,event):
         global operation
@@ -227,25 +242,45 @@ class CalcGUI(FloatLayout):
         else:
             self.firstNumber.text = result() + addOperation("÷")
         self.numberLabel.text = clearNumber()
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled = False
         
     def over(self,event):
-        print("^")
+        global operation
+        if operation=="":
+            print("^")
+            self.firstNumber.text = setFirstNumber() + addOperation("^")
+        else:
+            self.firstNumber.text = result() + addOperation("^")
         self.firstNumber.text = setFirstNumber() + addOperation("^")
         self.numberLabel.text = clearNumber()
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled = False
         
     def root(self,event):
-        print("√")
+        global operation
+        if operation=="":
+            print("√")
+            self.firstNumber.text = setFirstNumber() + addOperation("√")
+        else:
+            self.firstNumber.text = result() + addOperation("√")
+        #print("√")
         self.firstNumber.text = setFirstNumber() + addOperation("√")
         self.numberLabel.text = clearNumber()
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled = False
 
     def fact(self,event):
-        print("!")
+        global operation
+        if operation=="":
+            print("!")
+            self.firstNumber.text = setFirstNumber() + addOperation("!")
+        else:
+            self.firstNumber.text = result() + addOperation("!")
         self.firstNumber.text = setFirstNumber() + addOperation("!")
         self.numberLabel.text = clearNumber()
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled = False
 
         
     def equals(self,event):
@@ -258,7 +293,8 @@ class CalcGUI(FloatLayout):
         #self.firstNumber.text ="= "+ setFirstNumber()
         self.numberLabel.text = clearNumber()
         operation=""
-        self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        #self.buttonPoint.pos_hint={'x':.2, 'y':.0}
+        self.buttonPoint.disabled=False
         
         
 class Calc(App):
